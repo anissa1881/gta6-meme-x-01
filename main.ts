@@ -19,7 +19,7 @@ const OUTPUT_DIR = process.env.MAKEFUN_OUTPUT_DIR ?? '/output';
 const postPath = join(BOT_DIR, 'POST.json');
 if (!existsSync(postPath)) {
   console.error(
-    `POST.json not found in ${BOT_DIR}: post the meme on X first, then write POST.json with the post's address.`,
+    `POST.json not found at ${postPath}: post the meme on X first, then write POST.json with the post's address.`,
   );
   process.exit(1);
 }
@@ -28,6 +28,8 @@ mkdirSync(OUTPUT_DIR, { recursive: true });
 try {
   copyFileSync(postPath, join(OUTPUT_DIR, 'POST.json'));
 } catch (err) {
-  console.error(`POST.json could not be copied from ${BOT_DIR}: ${(err as Error).message}`);
+  console.error(`POST.json could not be copied from ${postPath}: ${(err as Error).message}`);
   process.exit(1);
 }
+
+console.log(`POST.json copied to ${join(OUTPUT_DIR, 'POST.json')}`);
